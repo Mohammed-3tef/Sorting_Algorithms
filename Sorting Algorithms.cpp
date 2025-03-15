@@ -262,6 +262,11 @@ void SortingSystem<T>::showMenu() {
             continue;
         }
 
+        if (choice != "0"){
+            cout << "Initial Data: ";
+            displayData();
+        }
+
         if (choice == "1")
             measureSortTime(&SortingSystem::insertionSort);
         else if (choice == "2")
