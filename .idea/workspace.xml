@@ -6,6 +6,12 @@
   <component name="CMakePresetLoader">{
   &quot;useNewFormat&quot;: true
 }</component>
+<<<<<<< HEAD
+=======
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+>>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -60,6 +66,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Mohammed-3tef&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Mohammed-3tef/Sorting_Algorithms.git&quot;,
+    &quot;accountId&quot;: &quot;93ba2ee0-4ddd-44e1-8f22-0da84576aa33&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -79,14 +97,28 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+<<<<<<< HEAD
+=======
+    &quot;C/C++ File.Sorting Algorithms.cpp.executor&quot;: &quot;Run&quot;,
+>>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
     &quot;CMake Application.Sorting_Algorithms.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+<<<<<<< HEAD
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+=======
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+>>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
     &quot;last_opened_file_path&quot;: &quot;F:/FCAI/Second year assignment/Second term/data structure/assignment 1/statistical calculation/Statistical_Calculation&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -97,9 +129,16 @@
   }
 }</component>
   <component name="RunManager">
+<<<<<<< HEAD
     <configuration name="Sorting_Algorithms" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting_Algorithms" TARGET_NAME="Sorting_Algorithms" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting_Algorithms" RUN_TARGET_NAME="Sorting_Algorithms">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+=======
+    <configuration name="Sorting Algorithms.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting_Algorithms" TARGET_NAME="Sorting Algorithms.cpp" CONFIG_NAME="Sorting Algorithms.cpp">
+      <option name="sourceFile" value="Sorting Algorithms.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+>>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
       </method>
     </configuration>
   </component>
@@ -112,8 +151,14 @@
       <option name="presentableId" value="Default" />
       <updated>1742021429821</updated>
       <workItem from="1742021431139" duration="8121000" />
+<<<<<<< HEAD
       <workItem from="1742039742797" duration="1001000" />
       <workItem from="1742050371565" duration="1256000" />
+=======
+      <workItem from="1742043490311" duration="3184000" />
+      <workItem from="1742046720059" duration="84000" />
+      <workItem from="1742050921868" duration="644000" />
+>>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
     </task>
     <servers />
   </component>

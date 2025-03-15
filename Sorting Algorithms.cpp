@@ -6,31 +6,28 @@
     * Author4: John Ayman Demian                 ID: 20230109
     * Author5: George Malak Magdy                ID: 20231042
 
- * Description: This is a program that manages "Iftar Invitations" which makes you add a guest,
-             display it and edit the date of invitation.
+ * Description: The Sorting System is designed to help sort dynamically allocated data using nine different sorting algorithms.
+                It provides an interactive menu for selecting a sorting method, supports various data types using templates,
+                and displays each sorting step for better understanding.
 
  * Date: ? / 3 / 2025
  * Prof: Dr. Besheer
 
  * Version: V1.0
 */
-
 // < ========================================================================================== >
 
 #include <bits/stdc++.h>
-#include <regex>
-
 using namespace std;
 
-bool isInteger(string str) {
-    if (str.empty()) return false;
-    if (str[0] == '-') str = str.substr(1);
+bool isInteger(const string& str) {
+    static const regex integerPattern(R"(^-?\d+$)");
+    return regex_match(str, integerPattern);
+}
 
-    for (int i = 0; i < str.length(); i++) {
-        if (!isdigit(str[i])) return false;
-    }
-
-    return true;
+bool isFloat(const string& str) {
+    static const regex floatPattern(R"(^-?\d+(\.\d+)?$)");
+    return regex_match(str, floatPattern);
 }
 
 // ----------------------------------------------- CLASS DEFINITION
@@ -72,7 +69,9 @@ void SortingSystem<T>::inputData() {
     for (int i = 1; i <= this->size; ++i) {
         cout << "Enter element " << i << ":";
         string element;
-        if constexpr (is_same<T, string>::value) {                             // handle if the type of data is strings.
+
+        // Handle if the type of data is strings.
+        if constexpr (is_same<T, string>::value) {
             getline(cin, element);
             while (element.empty()) {
                 cout << "Invalid Input!\n";
@@ -80,7 +79,10 @@ void SortingSystem<T>::inputData() {
                 getline(cin, element);
             }
             data[i - 1] = element;
-        } else if constexpr (is_same<T, char>::value) {                           // handle if the type of data is char.
+        }
+
+        // Handle if the type of data is char.
+        else if constexpr (is_same<T, char>::value) {
             getline(cin, element);
             while (element.empty()) {
                 cout << "Invalid Input!\n";
@@ -88,22 +90,26 @@ void SortingSystem<T>::inputData() {
                 getline(cin, element);
             }
             data[i - 1] = element[0];
-        } else if constexpr (is_same<T, double>::value || is_same<T, float>::value) {        // handle float and double.
-            regex pattern(R"(^-?\d+(\.\d+)?$)");
+        }
+
+        // Handle float and double.
+        else if constexpr (is_same<T, double>::value || is_same<T, float>::value) {
             while (true) {
                 getline(cin, element);
-                if (regex_match(element, pattern)) {
+                if (isFloat(element)) {
                     data[i - 1] = stod(element);
                     break;
                 }
                 cout << "Invalid Input!\n";
                 cout << "\nEnter element " << i << ":";
             }
-        } else {                                                                                 // handle int and long.
-            regex pattern(R"(^-?\d+$)");
+        }
+
+        // Handle int and long.
+        else {
             while (true) {
                 getline(cin, element);
-                if (regex_match(element, pattern)) {
+                if (isInteger(element)) {
                     data[i - 1] = stoll(element);
                     break;
                 }
@@ -125,14 +131,14 @@ SortingSystem<T>::~SortingSystem() {
 template<typename T>
 void SortingSystem<T>::insertionSort() {
     for (int i = 1, j; i < this->size; i++) {
-        T tmp = data[i];
-        for (j = i; j > 0 && tmp < data[j - 1]; j--) data[j] = data[j - 1];
-        data[j] = tmp;
+        T temp = data[i];
+        for (j = i; j > 0 && temp < data[j - 1]; j--)
+            data[j] = data[j - 1];
+        data[j] = temp;
     }
 
-    for (int i = 0; i < this->size; ++i) {
-        cout << data[i] << " ";
-    }
+    cout << "Sorted Data: ";
+    displayData();
 }
 
 // --------------------- SELECTION SORT
@@ -142,7 +148,7 @@ void SortingSystem<T>::selectionSort() {
     for (int i = 0; i < (this->size - 1) ; ++i) {
         int Least_Element = i;
         for (int j = (i+1) ; j < this->size ; ++j) {
-            if (this->data[j] < this->data[i]){
+            if (this->data[j] < this->data[Least_Element]){
                 Least_Element = j ;
             }
         }
@@ -213,14 +219,26 @@ void SortingSystem<T>::bucketSort() {
 
 template<typename T>
 void SortingSystem<T>::displayData() {
-
+    cout << "[";
+    for (int i = 0; i < this->size; ++i) {
+        if (i != this->size -1) cout << data[i] << ", ";
+        else cout << data[i];
+    }
+    cout << "]" << endl;
 }
 
 // --------------------- MEASURE SORT TIME
 
 template<typename T>
 void SortingSystem<T>::measureSortTime(void(SortingSystem<T>::*sortFunc)()) {
-    (this->*sortFunc)();
+    using Clock = chrono::high_resolution_clock;
+
+    auto startTime = Clock::now();     // Start Time Point.
+    (this->*sortFunc)();                 // Call the function without parameters
+    auto endTime = Clock::now();       // End Time Point.
+
+    chrono::duration<double> duration = endTime - startTime;
+    cout << "Sorting time: " << duration.count() << " seconds." << endl << endl;
 }
 
 // --------------------- SHOW MENU
@@ -245,28 +263,33 @@ void SortingSystem<T>::showMenu() {
 
         if (choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5" && choice != "6" &&
             choice != "7" && choice != "8" && choice != "9" && choice != "0") {
-            cout << "Invalid choice. Please try again." << endl;
+            cout << "Invalid choice. Please try again." << endl << endl;
             continue;
         }
 
+        if (choice != "0"){
+            cout << "Initial Data: ";
+            displayData();
+        }
+
         if (choice == "1")
-            insertionSort();
+            measureSortTime(&SortingSystem::insertionSort);
         else if (choice == "2")
-            selectionSort();
+            measureSortTime(&SortingSystem::selectionSort);
         else if (choice == "3")
-            bubbleSort();
+            measureSortTime(&SortingSystem::bubbleSort);
         else if (choice == "4")
-            shellSort();
+            measureSortTime(&SortingSystem::shellSort);
         else if (choice == "5")
-            mergeSort();
+            measureSortTime(&SortingSystem::mergeSort);
         else if (choice == "6")
-            quickSort();
+            measureSortTime(&SortingSystem::quickSort);
         else if (choice == "7")
-            countSort();
+            measureSortTime(&SortingSystem::countSort);
         else if (choice == "8")
-            radixSort();
+            measureSortTime(&SortingSystem::radixSort);
         else if (choice == "9")
-            bucketSort();
+            measureSortTime(&SortingSystem::bucketSort);
         else if (choice == "0")
             return;
     }
