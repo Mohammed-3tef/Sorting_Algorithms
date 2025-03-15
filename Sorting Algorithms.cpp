@@ -41,37 +41,21 @@ class SortingSystem {
     int size;
 public:
     SortingSystem(int n);
-
     ~SortingSystem();
-
     void inputData();
-
     void insertionSort();
-
     void selectionSort();
-
     void bubbleSort();
-
     void shellSort();
-
     void mergeSort();
-
     void quickSort();
-
     void countSort();
-
     void radixSort();
-
     void bucketSort();
-
     void merge(int left, int mid, int right);
-
     int partition(int low, int high);
-
     void displayData();
-
     void measureSortTime(void (SortingSystem<T>::*sortFunc)());
-
     void showMenu();
 };
 
@@ -155,7 +139,15 @@ void SortingSystem<T>::insertionSort() {
 
 template<typename T>
 void SortingSystem<T>::selectionSort() {
-
+    for (int i = 0; i < (this->size - 1) ; ++i) {
+        int Least_Element = i;
+        for (int j = (i+1) ; j < this->size ; ++j) {
+            if (this->data[j] < this->data[i]){
+                Least_Element = j ;
+            }
+        }
+        swap(this->data[i] , this->data[Least_Element] );
+    }
 }
 
 // --------------------- BUBBLE SORT
@@ -301,7 +293,7 @@ int main() {
         while (true) {
             cout << "Do you want to continue? (y/n):";
             getline(cin, choice);
-
+            choice = (choice);
             if (choice == "Y" || choice == "y" || choice == "N" || choice == "n") break;
             else cout << "Invalid choice. Please try again." << endl;
         }

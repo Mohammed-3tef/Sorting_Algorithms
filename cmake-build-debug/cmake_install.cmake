@@ -1,4 +1,4 @@
-# Install script for directory: F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms
+# Install script for directory: C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/programs/JetBrains/CLion 2023.3/bin/mingw/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "C:/MYSS/mingw64/bin/objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

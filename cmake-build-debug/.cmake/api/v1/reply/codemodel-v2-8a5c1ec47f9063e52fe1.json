@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms/cmake-build-debug",
-		"source" : "F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms"
+		"build" : "C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms/cmake-build-debug",
+		"source" : "C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms"
 	},
 	"version" : 
 	{
