@@ -78,9 +78,10 @@ public:
 };
 
 // ----------------------------------------------- CLASS IMPLEMENTATION
+
 // --------------------- CONSTRUCTOR & DESTRUCTOR
 template<typename T>
-SortingSystem<T>::SortingSystem(int n) : size(n) {
+SortingSystem<T>::SortingSystem(const int n) : size(n) {
     data = new T[size];
     inputData();
 }
