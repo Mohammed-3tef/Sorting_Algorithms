@@ -64,7 +64,11 @@ public:
 
     void merge(int left, int mid, int right);
 
-    int partition(int low, int high);
+    void mergeSortHelper(int left, int right) ;
+
+    int partition(int low,   int high);
+
+    void recQuickSort( int first,  int last);
 
     void displayData();
 
@@ -186,7 +190,21 @@ void SortingSystem<T>::selectionSort() {
 
 template<typename T>
 void SortingSystem<T>::bubbleSort() {
-
+    long long num_iteration = 1 ;
+    for (int i = 0; i < this->size; i++) {
+        for (int j = this->size - 1 ; j > i; --j) {
+            if (data[j-1] > data[j]) {
+                swap(data[j-1], data[j]);
+                cout << "Iteration " << num_iteration << " : " ;
+                displayData();
+                cout << endl;
+                num_iteration++;
+            }
+        }
+    }
+    cout << "Sorted Data: " ;
+    displayData();
+    cout << endl;
 }
 
 // --------------------- SHELL SORT
@@ -197,27 +215,119 @@ void SortingSystem<T>::shellSort() {
 }
 
 // --------------------- MERGE SORT
+int iteration = 0 ;
+template<typename T>
+void SortingSystem<T>::merge(const int left, const int mid, const int right) {
+        const int n1 = mid - left + 1;
+        const int n2 = right - mid;
+
+        T* left_data = new T[n1];
+        T* right_data = new T[n2];
+
+        for (int i = 0; i < n1; i++)
+            left_data[i] = data[left + i];
+        for (int i = 0; i < n2; i++)
+            right_data[i] = data[mid + 1 + i];
+
+        int i = 0, j = 0, k = left;
+        while (i < n1 && j < n2) {
+            if (left_data[i] <= right_data[j]) {
+                data[k] = left_data[i];
+                i++;
+            } else {
+                data[k] = right_data[j];
+                j++;
+            }
+            k++;
+        }
+        while (i < n1) {
+            data[k] = left_data[i];
+            i++; k++;
+        }
+
+        while (j < n2) {
+            data[k] = right_data[j];
+            j++; k++;
+        }
+
+        // Print the current state of the data after iteration of merge sort
+        iteration++;
+        cout << "Iteration " << iteration << " : ";
+        displayData() ;
+        cout << endl;
+
+        // Free temporary data arrays
+        delete[] left_data;
+        delete[] right_data;
+    }
 
 template<typename T>
-void SortingSystem<T>::merge(int left, int mid, int right) {
+void SortingSystem<T>::mergeSortHelper(const int left, const int right) {
+        if (left < right) {
+            const int mid = left + (right - left) / 2;
+            mergeSortHelper(left, mid);      // Sort left half
+            mergeSortHelper(mid + 1, right); // Sort right half
+            merge(left, mid, right);         // Merge the two halves
+        }
+    }
+template<typename T>
+void SortingSystem<T>:: mergeSort() {
+
+    mergeSortHelper(0, size - 1);
+
+    cout << "Sorted Data: "  ;
+    displayData() ;
+    cout << endl;
 
 }
 
+// --------------------- Quick SORT
 template<typename T>
-void SortingSystem<T>::mergeSort() {
+int SortingSystem<T>::partition(int low, const int high) {
+    swap(data[low], data[(low + high) / 2]);
+    T pivot = data[low];
+    int smallIndex = low;
 
+    for (int index = low + 1; index <= high; index++) {
+        if (data[index] < pivot) {
+            smallIndex++;
+            swap(data[smallIndex], data[index]);
+        }
+    }
+
+    swap(data[low], data[smallIndex]);
+
+    // Print the current partition
+    cout << "Pivot: " << pivot << " --> [";
+    for (int i = low; i < smallIndex; i++) {
+        cout << data[i];
+        if (i < smallIndex - 1) cout << ", ";
+    }
+    cout << "]  " << pivot << "  [";
+    for (int i = smallIndex + 1; i <= high; i++) {
+        cout << data[i];
+        if (i < high) cout << ", ";
+    }
+    cout << "]" << endl;
+
+    return smallIndex;
 }
-
-// --------------------- QUICK SORT
-
 template<typename T>
-int SortingSystem<T>::partition(int low, int high) {
-
+void SortingSystem<T>::recQuickSort(const int first, const int last) {
+    if (first < last) {
+        int pivotLocation = partition(first, last);
+        recQuickSort(first, pivotLocation - 1);
+        recQuickSort(pivotLocation + 1, last);
+    }
 }
-
 template<typename T>
 void SortingSystem<T>::quickSort() {
 
+    recQuickSort(0, this->size - 1);
+
+    cout << "Sorted Data: ";
+     displayData();
+    cout << endl;
 }
 
 // --------------------- COUNT SORT
