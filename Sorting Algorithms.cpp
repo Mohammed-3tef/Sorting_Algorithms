@@ -18,14 +18,15 @@
 // < ========================================================================================== >
 
 #include <bits/stdc++.h>
+
 using namespace std;
 
-bool isInteger(const string& str) {
+bool isInteger(const string &str) {
     static const regex integerPattern(R"(^-?\d+$)");
     return regex_match(str, integerPattern);
 }
 
-bool isFloat(const string& str) {
+bool isFloat(const string &str) {
     static const regex floatPattern(R"(^-?\d+(\.\d+)?$)");
     return regex_match(str, floatPattern);
 }
@@ -38,21 +39,37 @@ class SortingSystem {
     int size;
 public:
     SortingSystem(int n);
+
     ~SortingSystem();
+
     void inputData();
+
     void insertionSort();
+
     void selectionSort();
+
     void bubbleSort();
+
     void shellSort();
+
     void mergeSort();
+
     void quickSort();
+
     void countSort();
+
     void radixSort();
+
     void bucketSort();
+
     void merge(int left, int mid, int right);
+
     int partition(int low, int high);
+
     void displayData();
+
     void measureSortTime(void (SortingSystem<T>::*sortFunc)());
+
     void showMenu();
 };
 
@@ -81,7 +98,7 @@ void SortingSystem<T>::inputData() {
             data[i - 1] = element;
         }
 
-        // Handle if the type of data is char.
+            // Handle if the type of data is char.
         else if constexpr (is_same<T, char>::value) {
             getline(cin, element);
             while (element.empty()) {
@@ -92,7 +109,7 @@ void SortingSystem<T>::inputData() {
             data[i - 1] = element[0];
         }
 
-        // Handle float and double.
+            // Handle float and double.
         else if constexpr (is_same<T, double>::value || is_same<T, float>::value) {
             while (true) {
                 getline(cin, element);
@@ -105,7 +122,7 @@ void SortingSystem<T>::inputData() {
             }
         }
 
-        // Handle int and long.
+            // Handle int and long.
         else {
             while (true) {
                 getline(cin, element);
@@ -130,11 +147,20 @@ SortingSystem<T>::~SortingSystem() {
 
 template<typename T>
 void SortingSystem<T>::insertionSort() {
+    cout << "\nSorting using Selection Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
+
     for (int i = 1, j; i < this->size; i++) {
         T temp = data[i];
         for (j = i; j > 0 && temp < data[j - 1]; j--)
             data[j] = data[j - 1];
         data[j] = temp;
+
+        if (i < this->size - 1) {
+            cout << "Iteration " << i << " : ";
+            displayData();
+        }
     }
 
     cout << "Sorted Data: ";
@@ -145,14 +171,14 @@ void SortingSystem<T>::insertionSort() {
 
 template<typename T>
 void SortingSystem<T>::selectionSort() {
-    for (int i = 0; i < (this->size - 1) ; ++i) {
+    for (int i = 0; i < (this->size - 1); ++i) {
         int Least_Element = i;
-        for (int j = (i+1) ; j < this->size ; ++j) {
-            if (this->data[j] < this->data[Least_Element]){
-                Least_Element = j ;
+        for (int j = (i + 1); j < this->size; ++j) {
+            if (this->data[j] < this->data[Least_Element]) {
+                Least_Element = j;
             }
         }
-        swap(this->data[i] , this->data[Least_Element] );
+        swap(this->data[i], this->data[Least_Element]);
     }
 }
 
@@ -221,7 +247,7 @@ template<typename T>
 void SortingSystem<T>::displayData() {
     cout << "[";
     for (int i = 0; i < this->size; ++i) {
-        if (i != this->size -1) cout << data[i] << ", ";
+        if (i != this->size - 1) cout << data[i] << ", ";
         else cout << data[i];
     }
     cout << "]" << endl;
@@ -265,11 +291,6 @@ void SortingSystem<T>::showMenu() {
             choice != "7" && choice != "8" && choice != "9" && choice != "0") {
             cout << "Invalid choice. Please try again." << endl << endl;
             continue;
-        }
-
-        if (choice != "0"){
-            cout << "Initial Data: ";
-            displayData();
         }
 
         if (choice == "1")
