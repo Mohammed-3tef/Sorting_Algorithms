@@ -339,37 +339,54 @@ void SortingSystem<T>::quickSort() {
 
 template<typename T>
 void SortingSystem<T>::countSort() {
-    int Max_Value = 0;
-    for (int i = 0; i < this->size-1; i++)
-        Max_Value = max(Max_Value, data[i]);
+    cout << "Sorting using Selection Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
 
-    vector C(Max_Value+1, 0); // Initialize count array with zeros
-    cout << "Max_Value: " << Max_Value << endl ;
+    // Find the maximum value in the array
+    T Max_Value = data[0];
+    for (int i = 1; i < this->size; i++) {
+        Max_Value = max(Max_Value, data[i]);
+    }
+
+    // Create and initialize a count array
+    int* C = new int[Max_Value + 1](); // Dynamic allocation, initialized to 0
+
+    cout << "Max_Value: " << Max_Value << endl;
 
     // Step 1: Count occurrences
-    for (int i = 0; i < this->size-1 ; i++) {
+    for (int i = 0; i < this->size; i++) {
         C[data[i]]++;
     }
 
     // Step 2: Compute cumulative count
-    cout <<  "Cumulative Data: [";
-    for (int i = 1; i < Max_Value; i++) {
+    cout << "Cumulative Data: [";
+    for (int i = 1; i <= Max_Value; i++) {
         C[i] += C[i - 1];
-        cout << ' ' << C[i];
+        if (i != Max_Value) cout << C[i] << ", ";
+        else cout << C[i];
     }
-    cout << ']' << endl;
-    vector B(this->size-1, 0);
+    cout << "]" << endl;
+
+    // Create the output array
+    T* B = new T[this->size];
 
     // Step 3: Place elements in sorted order
-    for (int i = this->size -1 - 1; i >= 0; i--) {
+    for (int i = this->size - 1; i >= 0; i--) {
         B[C[data[i]] - 1] = data[i];
         C[data[i]]--;
     }
 
-    // Step 4: Copy sorted array back to A
-    for (int i = 0; i < this->size - 1; i++) {
+    // Step 4: Copy sorted array back to data
+    for (int i = 0; i < this->size; i++) {
         data[i] = B[i];
     }
+
+    // Free dynamically allocated memory
+    delete[] C;
+    delete[] B;
+
+    cout << endl << "Sorted Data: ";
     displayData();
 }
 
@@ -455,9 +472,14 @@ void SortingSystem<T>::showMenu() {
             if constexpr (is_integral<T>::value) {
                 measureSortTime(&SortingSystem::countSort);
             }
+            else cout << "Count Sort is only available for integers." << endl << endl;
         }
-        else if (choice == "8")
-            measureSortTime(&SortingSystem::radixSort);
+        else if (choice == "8") {
+            if constexpr (is_integral<T>::value) {
+                measureSortTime(&SortingSystem::radixSort);
+            }
+            else cout << "Radix Sort is only available for integers." << endl << endl;
+        }
         else if (choice == "9")
             measureSortTime(&SortingSystem::bucketSort);
         else if (choice == "0")
@@ -471,17 +493,45 @@ int main() {
     cout << "\n------------- WELCOME TO OUR SORTING SYSTEM -------------\n" << endl;
 
     while (true) {
-        cout << "Enter the number of elements:";
-        string numberOfElements;
-        getline(cin, numberOfElements);
-        if (!isInteger(numberOfElements) || stoi(numberOfElements) <= 0) {
-            cout << "Invalid input. Please enter a valid number." << endl;
-            continue;
+        // Choose the data type for the sorting system (numbers or strings).
+        string dataType;
+        while (true) {
+            cout << "Enter the data type :" << endl;
+            cout << "1. Integers." << endl;
+            cout << "2. Doubles & Floats." << endl;
+            cout << "3. Strings & Characters." << endl;
+            cout << "Enter your choice (1-3):";
+            getline(cin, dataType);
+
+            if (dataType == "1" || dataType == "2" || dataType == "3") break;
+            cout << "Invalid choice. Please try again." << endl;
         }
 
-        SortingSystem<string> sortingSystem(stoi(numberOfElements));
-        sortingSystem.showMenu();
+        // Enter the number of elements to be sorted in the system.
+        string numberOfElements;
+        while (true) {
+            cout << "Enter the number of elements:";
+            getline(cin, numberOfElements);
 
+            if (isInteger(numberOfElements) && stoi(numberOfElements) > 0) break;
+            cout << "Invalid input. Please enter a valid number." << endl;
+        }
+
+        // Create the sorting system object based on the data type.
+        if (dataType == "1") {
+            SortingSystem<int> sortingSystem(stoi(numberOfElements));
+            sortingSystem.showMenu();
+        }
+        else if (dataType == "2") {
+            SortingSystem<double> sortingSystem(stoi(numberOfElements));
+            sortingSystem.showMenu();
+        }
+        else if (dataType == "3") {
+            SortingSystem<string> sortingSystem(stoi(numberOfElements));
+            sortingSystem.showMenu();
+        }
+
+        // Ask the user if they want to continue using the system or exit.
         string choice;
         while (true) {
             cout << "Do you want to continue? (y/n):";
