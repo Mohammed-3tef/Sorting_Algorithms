@@ -335,7 +335,35 @@ void SortingSystem<T>::quickSort() {
 
 template<typename T>
 void SortingSystem<T>::countSort() {
+    int Max_Value = 0;
+    for (int i = 0; i < this->size-1; i++)
+        Max_Value = max(Max_Value, data[i]);
 
+    vector C(Max_Value+1, 0); // Initialize count array with zeros
+    cout << "Max_Value: " << Max_Value << endl ;
+    // Step 1: Count occurrences
+    for (int i = 0; i < this->size-1 ; i++) {
+        C[data[i]]++;
+    }
+    // Step 2: Compute cumulative count
+    cout <<  "Cumulative Data: [";
+    for (int i = 1; i < Max_Value; i++) {
+        C[i] += C[i - 1];
+        cout << ' ' << C[i];
+    }
+    cout << ']' << endl;
+    vector B(this->size-1, 0);
+    // Step 3: Place elements in sorted order
+    for (int i = this->size -1 - 1; i >= 0; i--) {
+        B[C[data[i]] - 1] = data[i];
+        C[data[i]]--;
+    }
+
+    // Step 4: Copy sorted array back to A
+    for (int i = 0; i < this->size - 1; i++) {
+        data[i] = B[i];
+    }
+    displayData();
 }
 
 // --------------------- RADIX SORT
@@ -416,8 +444,11 @@ void SortingSystem<T>::showMenu() {
             measureSortTime(&SortingSystem::mergeSort);
         else if (choice == "6")
             measureSortTime(&SortingSystem::quickSort);
-        else if (choice == "7")
-            measureSortTime(&SortingSystem::countSort);
+        else if (choice == "7") {
+            if constexpr (is_integral<T>::value) {
+                measureSortTime(&SortingSystem::countSort);
+            }
+        }
         else if (choice == "8")
             measureSortTime(&SortingSystem::radixSort);
         else if (choice == "9")
