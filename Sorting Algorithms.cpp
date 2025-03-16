@@ -48,6 +48,7 @@ public:
     void mergeSort();
     void quickSort();
     void countSort();
+    void countSortForRadix(int exp);
     void radixSort();
     void bucketSort();
 
@@ -209,7 +210,23 @@ void SortingSystem<T>::bubbleSort() {
 
 template<typename T>
 void SortingSystem<T>::shellSort() {
+    cout << "Sorting using Sell Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
+    for (int gap = this->size/2; gap > 0; gap /= 2)
+    {
+        for (int i = gap; i < this->size; i += 1)
+        {
+            T temp = data[i];
+            int j;
+            for (j = i; j >= gap && data[j - gap] > temp; j -= gap)
+                data[j] = data[j - gap];
 
+            data[j] = temp;
+        }
+    }
+    cout << endl << "Sorted Data: " ;
+    displayData();
 }
 
 // --------------------- MERGE SORT
@@ -339,12 +356,12 @@ void SortingSystem<T>::quickSort() {
 
 template<typename T>
 void SortingSystem<T>::countSort() {
-    cout << "Sorting using Selection Sort...\n\n";
+    cout << "Sorting using Count Sort...\n\n";
     cout << "Initial Data: ";
     displayData();
 
     // Find the maximum value in the array
-    T Max_Value = data[0];
+    int Max_Value = data[0];
     for (int i = 1; i < this->size; i++) {
         Max_Value = max(Max_Value, data[i]);
     }
@@ -389,12 +406,61 @@ void SortingSystem<T>::countSort() {
     cout << endl << "Sorted Data: ";
     displayData();
 }
+template<typename T>
+void SortingSystem<T>::countSortForRadix(int exp) {
+    T* B = new T[this->size]; // Output array
+    int C[10] = {0}; // Counting array for digits (0-9)
+
+    // Step 1: Count occurrences of each digit at place 'exp'
+    for (int i = 0; i < this->size; i++) {
+        int digit = (data[i] / exp) % 10;
+        C[digit]++;
+    }
+
+    // Step 2: Compute cumulative count
+    for (int i = 1; i < 10; i++) {
+        C[i] += C[i - 1];
+    }
+
+    // Step 3: Place elements in sorted order (stable sort)
+    for (int i = this->size - 1; i >= 0; i--) {
+        int digit = (data[i] / exp) % 10;
+        B[C[digit] - 1] = data[i];
+        C[digit]--;
+    }
+
+    // Step 4: Copy sorted elements back to original array
+    for (int i = 0; i < this->size; i++) {
+        data[i] = B[i];
+    }
+
+    // Free dynamically allocated memory
+    delete[] B;
+}
 
 // --------------------- RADIX SORT
 
 template<typename T>
 void SortingSystem<T>::radixSort() {
+    cout << "Sorting using Radix Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
 
+    int Max_Value = 0;
+    for (int i = 1; i < this->size; i++) {
+        Max_Value = max(Max_Value, data[i]);
+    }
+
+
+    // Apply counting sort for each digit place
+    for (int exp = 1; Max_Value / exp > 0; exp *= 10) {
+        countSortForRadix(exp);
+        cout << "After sorting on place value " << exp << ": ";
+        displayData();
+    }
+
+    cout << endl << "Sorted Data: ";
+    displayData();
 }
 
 // --------------------- BUCKET SORT
@@ -445,7 +511,7 @@ void SortingSystem<T>::showMenu() {
         cout << "7. Count Sort (only for integers)." << endl;
         cout << "8. Radix Sort (only for integers)." << endl;
         cout << "9. Bucket Sort." << endl;
-        cout << "0. Exit." << endl;
+        cout << "0. Exit From Menu." << endl;
         cout << "Enter your choice (0 - 9):";
         string choice;
         getline(cin, choice);
