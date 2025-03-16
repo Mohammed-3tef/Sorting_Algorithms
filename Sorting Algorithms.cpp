@@ -212,7 +212,32 @@ void SortingSystem<T>::radixSort() {
 
 template<typename T>
 void SortingSystem<T>::bucketSort() {
+    T buckets [this->size][this->size];
+    const int s_z = this->size;
+//    int bucket_sizes [s_z] = {0};
+    T min = this->data[0], max = this->data[0] ;
+    // max , min ;
+    for(int i = 1 ; i < this-> size; ++i) {
+        if (max < this->data[i]) {
+            max = this->data[i] ;
+        }
+        if (min > this->data[i]){
+            min = this->data[i];
+        }
+    }
+    // insert
+    for(int i = 0 ; i < this-> size; ++i) {
+        T Norm_value = (this->data[i] - min) / (max - min) ;
+        buckets[floor(Norm_value * this->size)]
+    }
+    // sort
+    for(int i = 1 ; i < this-> size; ++i) {
 
+    }
+    // merge
+    for(int i = 1 ; i < this-> size; ++i) {
+
+    }
 }
 
 // --------------------- DISPLAY DATA

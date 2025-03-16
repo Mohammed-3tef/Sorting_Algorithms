@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms/cmake-build-debug/CMakeFiles/Sorting_Algorithms.dir
-C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-=======
-C:/Users/fr/OneDrive/Desktop/Data Structures Assignments/Assignment 1/Sorting_Algorithms/cmake-build-debug/CMakeFiles/Sorting_Algorithms.dir
-C:/Users/fr/OneDrive/Desktop/Data Structures Assignments/Assignment 1/Sorting_Algorithms/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/fr/OneDrive/Desktop/Data Structures Assignments/Assignment 1/Sorting_Algorithms/cmake-build-debug/CMakeFiles/rebuild_cache.dir
->>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
