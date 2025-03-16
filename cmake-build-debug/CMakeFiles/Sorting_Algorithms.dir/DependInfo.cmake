@@ -8,11 +8,15 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms/Sorting Algorithms.cpp" "CMakeFiles/Sorting_Algorithms.dir/Sorting_Algorithms.cpp.obj" "gcc" "CMakeFiles/Sorting_Algorithms.dir/Sorting_Algorithms.cpp.obj.d"
+  "C:/Users/fr/OneDrive/Desktop/Data Structures Assignments/Assignment 1/Sorting_Algorithms/Sorting Algorithms.cpp" "CMakeFiles/Sorting_Algorithms.dir/Sorting_Algorithms.cpp.obj" "gcc" "CMakeFiles/Sorting_Algorithms.dir/Sorting_Algorithms.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
 set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.
