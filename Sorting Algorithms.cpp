@@ -20,12 +20,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isInteger(const string& str) {
+bool isInteger(const string &str) {
     static const regex integerPattern(R"(^-?\d+$)");
     return regex_match(str, integerPattern);
 }
 
-bool isFloat(const string& str) {
+bool isFloat(const string &str) {
     static const regex floatPattern(R"(^-?\d+(\.\d+)?$)");
     return regex_match(str, floatPattern);
 }
@@ -40,6 +40,7 @@ public:
     SortingSystem(int n);
     ~SortingSystem();
     void inputData();
+
     void insertionSort();
     void selectionSort();
     void bubbleSort();
@@ -49,17 +50,23 @@ public:
     void countSort();
     void radixSort();
     void bucketSort();
+
     void merge(int left, int mid, int right);
+    void mergeSortHelper(int left, int right) ;
     int partition(int low, int high);
+    void recQuickSort(int first, int last);
+
     void displayData();
+    void display(T arr [] , int s);
     void measureSortTime(void (SortingSystem<T>::*sortFunc)());
     void showMenu();
 };
-
 // ----------------------------------------------- CLASS IMPLEMENTATION
-// --------------------- CONSTRUCTOR & DESTRUCTOR
+
+// --------------------- CONSTRUCTOR & INPUT DATA & DESTRUCTOR
+
 template<typename T>
-SortingSystem<T>::SortingSystem(int n) : size(n) {
+SortingSystem<T>::SortingSystem(const int n) : size(n) {
     data = new T[size];
     inputData();
 }
@@ -81,7 +88,7 @@ void SortingSystem<T>::inputData() {
             data[i - 1] = element;
         }
 
-        // Handle if the type of data is char.
+            // Handle if the type of data is char.
         else if constexpr (is_same<T, char>::value) {
             getline(cin, element);
             while (element.empty()) {
@@ -92,7 +99,7 @@ void SortingSystem<T>::inputData() {
             data[i - 1] = element[0];
         }
 
-        // Handle float and double.
+            // Handle float and double.
         else if constexpr (is_same<T, double>::value || is_same<T, float>::value) {
             while (true) {
                 getline(cin, element);
@@ -105,7 +112,7 @@ void SortingSystem<T>::inputData() {
             }
         }
 
-        // Handle int and long.
+            // Handle int and long.
         else {
             while (true) {
                 getline(cin, element);
@@ -130,37 +137,82 @@ SortingSystem<T>::~SortingSystem() {
 
 template<typename T>
 void SortingSystem<T>::insertionSort() {
+    cout << "Sorting using Selection Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
+
     for (int i = 1, j; i < this->size; i++) {
         T temp = data[i];
         for (j = i; j > 0 && temp < data[j - 1]; j--)
             data[j] = data[j - 1];
         data[j] = temp;
+
+        if (i < this->size - 1) {
+            cout << "Iteration " << i << " : ";
+            displayData();
+        }
     }
 
-    cout << "Sorted Data: ";
+    cout << endl << "Sorted Data: ";
     displayData();
 }
+// other version to bucket sort
+template<typename T>
+void insertion_sort(T buck [] , int size) {
+    for (int i = 1, j; i < size; i++) {
+        T temp = buck[i];
+        for (j = i; j > 0 && temp < buck[j - 1]; j--)
+            buck[j] = buck[j - 1];
+        buck[j] = temp;
 
+    }
+}
 // --------------------- SELECTION SORT
 
 template<typename T>
 void SortingSystem<T>::selectionSort() {
-    for (int i = 0; i < (this->size - 1) ; ++i) {
+    cout << "Sorting using Selection Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
+
+    for (int i = 0; i < (this->size - 1); ++i) {
         int Least_Element = i;
-        for (int j = (i+1) ; j < this->size ; ++j) {
-            if (this->data[j] < this->data[Least_Element]){
-                Least_Element = j ;
+        for (int j = (i + 1); j < this->size; ++j) {
+            if (this->data[j] < this->data[Least_Element]) {
+                Least_Element = j;
             }
         }
-        swap(this->data[i] , this->data[Least_Element] );
+        swap(this->data[i], this->data[Least_Element]);
+
+        cout << "Iteration " << i+1 << " : ";
+        displayData();
     }
+
+    cout << endl << "Sorted Data: ";
+    displayData();
 }
 
 // --------------------- BUBBLE SORT
 
 template<typename T>
 void SortingSystem<T>::bubbleSort() {
+    cout << "Sorting using Selection Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
 
+    long long num_iteration = 1 ;
+    for (int i = 0; i < this->size; i++) {
+        for (int j = this->size - 1 ; j > i; --j) {
+            if (data[j-1] > data[j]) {
+                swap(data[j-1], data[j]);
+                cout << "Iteration " << num_iteration << " : " ;
+                displayData();
+                num_iteration++;
+            }
+        }
+    }
+    cout << endl << "Sorted Data: " ;
+    displayData();
 }
 
 // --------------------- SHELL SORT
@@ -172,33 +224,163 @@ void SortingSystem<T>::shellSort() {
 
 // --------------------- MERGE SORT
 
+int iteration = 0 ;
 template<typename T>
-void SortingSystem<T>::merge(int left, int mid, int right) {
+void SortingSystem<T>::merge(const int left, const int mid, const int right) {
+    const int n1 = mid - left + 1;
+    const int n2 = right - mid;
 
+    T* left_data = new T[n1];
+    T* right_data = new T[n2];
+
+    for (int i = 0; i < n1; i++)
+        left_data[i] = data[left + i];
+    for (int i = 0; i < n2; i++)
+        right_data[i] = data[mid + 1 + i];
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (left_data[i] <= right_data[j]) {
+            data[k] = left_data[i];
+            i++;
+        } else {
+            data[k] = right_data[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < n1) {
+        data[k] = left_data[i];
+        i++; k++;
+    }
+
+    while (j < n2) {
+        data[k] = right_data[j];
+        j++; k++;
+    }
+
+    // Print the current state of the data after iteration of merge sort
+    iteration++;
+    cout << "Iteration " << iteration << " : ";
+    displayData() ;
+
+    // Free temporary data arrays
+    delete[] left_data;
+    delete[] right_data;
 }
 
 template<typename T>
-void SortingSystem<T>::mergeSort() {
-
+void SortingSystem<T>::mergeSortHelper(const int left, const int right) {
+    if (left < right) {
+        const int mid = left + (right - left) / 2;
+        mergeSortHelper(left, mid);      // Sort left half
+        mergeSortHelper(mid + 1, right); // Sort right half
+        merge(left, mid, right);         // Merge the two halves
+    }
 }
 
-// --------------------- QUICK SORT
+template<typename T>
+void SortingSystem<T>:: mergeSort() {
+    cout << "Sorting using Selection Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
+
+    mergeSortHelper(0, size - 1);
+
+    cout << endl << "Sorted Data: "  ;
+    displayData() ;
+}
+
+// --------------------- Quick SORT
 
 template<typename T>
-int SortingSystem<T>::partition(int low, int high) {
+int SortingSystem<T>::partition(int low, const int high) {
+    swap(data[low], data[(low + high) / 2]);
+    T pivot = data[low];
+    int smallIndex = low;
 
+    for (int index = low + 1; index <= high; index++) {
+        if (data[index] < pivot) {
+            smallIndex++;
+            swap(data[smallIndex], data[index]);
+        }
+    }
+
+    swap(data[low], data[smallIndex]);
+
+    // Print the current partition
+    cout << "Pivot: " << pivot << " --> [";
+    for (int i = low; i < smallIndex; i++) {
+        cout << data[i];
+        if (i < smallIndex - 1) cout << ", ";
+    }
+    cout << "]  " << pivot << "  [";
+    for (int i = smallIndex + 1; i <= high; i++) {
+        cout << data[i];
+        if (i < high) cout << ", ";
+    }
+    cout << "]" << endl;
+
+    return smallIndex;
+}
+
+template<typename T>
+void SortingSystem<T>::recQuickSort(const int first, const int last) {
+    if (first < last) {
+        int pivotLocation = partition(first, last);
+        recQuickSort(first, pivotLocation - 1);
+        recQuickSort(pivotLocation + 1, last);
+    }
 }
 
 template<typename T>
 void SortingSystem<T>::quickSort() {
+    cout << "Sorting using Selection Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
 
+    recQuickSort(0, this->size - 1);
+
+    cout << endl << "Sorted Data: ";
+    displayData();
 }
 
 // --------------------- COUNT SORT
 
 template<typename T>
 void SortingSystem<T>::countSort() {
+    int Max_Value = 0;
+    for (int i = 0; i < this->size-1; i++)
+        Max_Value = max(Max_Value, data[i]);
 
+    vector C(Max_Value+1, 0); // Initialize count array with zeros
+    cout << "Max_Value: " << Max_Value << endl ;
+
+    // Step 1: Count occurrences
+    for (int i = 0; i < this->size-1 ; i++) {
+        C[data[i]]++;
+    }
+
+    // Step 2: Compute cumulative count
+    cout <<  "Cumulative Data: [";
+    for (int i = 1; i < Max_Value; i++) {
+        C[i] += C[i - 1];
+        cout << ' ' << C[i];
+    }
+    cout << ']' << endl;
+    vector B(this->size-1, 0);
+
+    // Step 3: Place elements in sorted order
+    for (int i = this->size -1 - 1; i >= 0; i--) {
+        B[C[data[i]] - 1] = data[i];
+        C[data[i]]--;
+    }
+
+    // Step 4: Copy sorted array back to A
+    for (int i = 0; i < this->size - 1; i++) {
+        data[i] = B[i];
+    }
+    displayData();
 }
 
 // --------------------- RADIX SORT
@@ -209,44 +391,77 @@ void SortingSystem<T>::radixSort() {
 }
 
 // --------------------- BUCKET SORT
-
 template<typename T>
 void SortingSystem<T>::bucketSort() {
-    T buckets [this->size][this->size];
-    const int s_z = this->size;
-//    int bucket_sizes [s_z] = {0};
-    T min = this->data[0], max = this->data[0] ;
-    // max , min ;
-    for(int i = 1 ; i < this-> size; ++i) {
-        if (max < this->data[i]) {
-            max = this->data[i] ;
-        }
-        if (min > this->data[i]){
-            min = this->data[i];
-        }
-    }
-    // insert
-    for(int i = 0 ; i < this-> size; ++i) {
-        T Norm_value = (this->data[i] - min) / (max - min) ;
-        buckets[floor(Norm_value * this->size)]
-    }
-    // sort
-    for(int i = 1 ; i < this-> size; ++i) {
+    cout << "Sorting using Selection Sort...\n\n";
+    cout << "Initial Data: ";
+    displayData();
 
+    T  minimum = (this->data[0]) ;
+    T  maximum = (this->data[0]) ;
+    for (int i = 0; i < this->size; ++i) {
+        T val = (this->data[i]);
+        if (val > maximum) maximum = val;
+        if (val < minimum) minimum = val;
     }
-    // merge
-    for(int i = 1 ; i < this-> size; ++i) {
 
+    if (minimum == maximum) {
+        cout << "All elements are already Sorted.\nSorted Data: ";
+        displayData();
+        return;
     }
+
+    T** buckets = new T*[this->size];
+    int* bucket_sizes = new int[this->size];
+
+    for (int i = 0; i < this->size; ++i) {
+        buckets[i] = new T[this->size];
+        bucket_sizes[i] = 0;
+    }
+
+    for (int i = 0; i < this->size; ++i) {
+        T norm = (this->data[i] - minimum) / (maximum - minimum);
+        int index = static_cast<int>(norm * (this->size - 1));
+
+        buckets[index][bucket_sizes[index]] = this->data[i];
+        bucket_sizes[index]++;
+    }
+    int index = 1;
+    for (int i = 0; i < this->size; ++i) {
+        if (bucket_sizes[i] > 0) {
+            insertion_sort(buckets[i], bucket_sizes[i]);
+             cout << "Iteration " << index++ << ':' ; display(buckets[i], bucket_sizes[i]);
+        }
+    }
+    index = 0 ;
+    for (int i = 0; i < this->size; ++i) {
+        for (int j = 0; j < bucket_sizes[i]; ++j) {
+            data[index++] = buckets[i][j];
+        }
+    }
+    cout << "Sorted Data :" ; displayData();
+    for (int i = 0; i < this->size; ++i) {
+        delete[] buckets[i];
+    }
+    delete[] buckets;
+    delete[] bucket_sizes;
 }
 
 // --------------------- DISPLAY DATA
-
+template<typename T>
+void SortingSystem<T>::display(T arr [] , int s) {
+    cout << "[";
+    for (int i = 0; i < s ; ++i) {
+        if (i != s - 1) cout << arr[i] << ", ";
+        else cout << arr[i];
+    }
+    cout << "]" << endl;
+}
 template<typename T>
 void SortingSystem<T>::displayData() {
     cout << "[";
     for (int i = 0; i < this->size; ++i) {
-        if (i != this->size -1) cout << data[i] << ", ";
+        if (i != this->size - 1) cout << data[i] << ", ";
         else cout << data[i];
     }
     cout << "]" << endl;
@@ -292,11 +507,6 @@ void SortingSystem<T>::showMenu() {
             continue;
         }
 
-        if (choice != "0"){
-            cout << "Initial Data: ";
-            displayData();
-        }
-
         if (choice == "1")
             measureSortTime(&SortingSystem::insertionSort);
         else if (choice == "2")
@@ -309,8 +519,11 @@ void SortingSystem<T>::showMenu() {
             measureSortTime(&SortingSystem::mergeSort);
         else if (choice == "6")
             measureSortTime(&SortingSystem::quickSort);
-        else if (choice == "7")
-            measureSortTime(&SortingSystem::countSort);
+        else if (choice == "7") {
+            if constexpr (is_integral<T>::value) {
+                measureSortTime(&SortingSystem::countSort);
+            }
+        }
         else if (choice == "8")
             measureSortTime(&SortingSystem::radixSort);
         else if (choice == "9")

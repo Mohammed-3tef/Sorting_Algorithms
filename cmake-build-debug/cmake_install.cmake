@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Install script for directory: C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms
-=======
 # Install script for directory: C:/Users/fr/OneDrive/Desktop/Data Structures Assignments/Assignment 1/Sorting_Algorithms
->>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,11 +34,7 @@ endif()
 
 # Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
-<<<<<<< HEAD
-  set(CMAKE_OBJDUMP "C:/MYSS/mingw64/bin/objdump.exe")
-=======
   set(CMAKE_OBJDUMP "C:/msys64/mingw64/bin/objdump.exe")
->>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -60,10 +52,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-<<<<<<< HEAD
-file(WRITE "C:/Users/georg/OneDrive/Desktop/DStructure/Assigment/1/Sorting_Algorithms/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
-=======
   file(WRITE "C:/Users/fr/OneDrive/Desktop/Data Structures Assignments/Assignment 1/Sorting_Algorithms/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
->>>>>>> 2bceeeda6b1b3f55b21946b04626756de7d97918
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
