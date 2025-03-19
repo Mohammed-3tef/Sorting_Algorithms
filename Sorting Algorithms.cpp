@@ -20,12 +20,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isInteger(const string &str) {
+bool isValidInteger(const string &str) {
     static const regex integerPattern(R"(^-?\d+$)");
     return regex_match(str, integerPattern);
 }
 
-bool isFloat(const string &str) {
+bool isValidFloat(const string &str) {
     static const regex floatPattern(R"(^-?\d+(\.\d+)?$)");
     return regex_match(str, floatPattern);
 }
@@ -62,6 +62,7 @@ public:
     void measureSortTime(void (SortingSystem<T>::*sortFunc)());
     void showMenu();
 };
+
 // ----------------------------------------------- CLASS IMPLEMENTATION
 
 // --------------------- CONSTRUCTOR & INPUT DATA & DESTRUCTOR
@@ -78,7 +79,7 @@ void SortingSystem<T>::inputData() {
         cout << "Enter element " << i << ":";
         string element;
 
-        // Handle if the type of data is strings.
+            // Handle if the type of data is strings.
         if constexpr (is_same<T, string>::value) {
             getline(cin, element);
             while (element.empty()) {
@@ -104,7 +105,7 @@ void SortingSystem<T>::inputData() {
         else if constexpr (is_same<T, double>::value || is_same<T, float>::value) {
             while (true) {
                 getline(cin, element);
-                if (isFloat(element)) {
+                if (isValidFloat(element)) {
                     data[i - 1] = stod(element);
                     break;
                 }
@@ -117,7 +118,7 @@ void SortingSystem<T>::inputData() {
         else {
             while (true) {
                 getline(cin, element);
-                if (isInteger(element)) {
+                if (isValidInteger(element)) {
                     data[i - 1] = stoll(element);
                     break;
                 }
@@ -157,9 +158,10 @@ void SortingSystem<T>::insertionSort() {
     cout << endl << "Sorted Data: ";
     displayData();
 }
-// other version to bucket sort
+
+// Another version to bucket sort
 template<typename T>
-void insertion_sort(T buck [] , int size) {
+void insertionSortForBucket(T buck [] , int size) {
     for (int i = 1, j; i < size; i++) {
         T temp = buck[i];
         for (j = i; j > 0 && temp < buck[j - 1]; j--)
@@ -168,6 +170,7 @@ void insertion_sort(T buck [] , int size) {
 
     }
 }
+
 // --------------------- SELECTION SORT
 
 template<typename T>
@@ -177,13 +180,13 @@ void SortingSystem<T>::selectionSort() {
     displayData();
 
     for (int i = 0; i < (this->size - 1); ++i) {
-        int Least_Element = i;
+        int minIndex = i;
         for (int j = (i + 1); j < this->size; ++j) {
-            if (this->data[j] < this->data[Least_Element]) {
-                Least_Element = j;
+            if (this->data[j] < this->data[minIndex]) {
+                minIndex = j;
             }
         }
-        swap(this->data[i], this->data[Least_Element]);
+        swap(this->data[i], this->data[minIndex]);
 
         cout << "Iteration " << i+1 << " : ";
         displayData();
@@ -212,6 +215,7 @@ void SortingSystem<T>::bubbleSort() {
             }
         }
     }
+
     cout << endl << "Sorted Data: " ;
     displayData();
 }
@@ -223,10 +227,9 @@ void SortingSystem<T>::shellSort() {
     cout << "Sorting using Sell Sort...\n\n";
     cout << "Initial Data: ";
     displayData();
-    for (int gap = this->size/2; gap > 0; gap /= 2)
-    {
-        for (int i = gap; i < this->size; i += 1)
-        {
+
+    for (int gap = this->size/2; gap > 0; gap /= 2){
+        for (int i = gap; i < this->size; i += 1){
             T temp = data[i];
             int j;
             for (j = i; j >= gap && data[j - gap] > temp; j -= gap)
@@ -235,6 +238,7 @@ void SortingSystem<T>::shellSort() {
             data[j] = temp;
         }
     }
+
     cout << endl << "Sorted Data: " ;
     displayData();
 }
@@ -260,7 +264,8 @@ void SortingSystem<T>::merge(const int left, const int mid, const int right) {
         if (left_data[i] <= right_data[j]) {
             data[k] = left_data[i];
             i++;
-        } else {
+        }
+        else {
             data[k] = right_data[j];
             j++;
         }
@@ -395,8 +400,7 @@ void SortingSystem<T>::countSort() {
     }
     cout << "]" << endl;
 
-    // Create the output array
-    T* B = new T[this->size];
+    T* B = new T[this->size];       // Create the output array
 
     // Step 3: Place elements in sorted order
     for (int i = this->size - 1; i >= 0; i--) {
@@ -416,6 +420,7 @@ void SortingSystem<T>::countSort() {
     cout << endl << "Sorted Data: ";
     displayData();
 }
+
 template<typename T>
 void SortingSystem<T>::countSortForRadix(int exp) {
     T* B = new T[this->size]; // Output array
@@ -461,7 +466,6 @@ void SortingSystem<T>::radixSort() {
         Max_Value = max(Max_Value, data[i]);
     }
 
-
     // Apply counting sort for each digit place
     for (int exp = 1; Max_Value / exp > 0; exp *= 10) {
         countSortForRadix(exp);
@@ -474,32 +478,38 @@ void SortingSystem<T>::radixSort() {
 }
 
 // --------------------- BUCKET SORT
+
 template<typename T>
 void SortingSystem<T>::bucketSort() {
     cout << "Sorting using Selection Sort...\n\n";
     cout << "Initial Data: ";
     displayData();
 
-    T  minimum = (this->data[0]) ;
-    T  maximum = (this->data[0]) ;
+    T minimum = (this->data[0]), maximum = (this->data[0]);
     for (int i = 0; i < this->size; ++i) {
         T val = (this->data[i]);
         if (val > maximum) maximum = val;
         if (val < minimum) minimum = val;
     }
 
-    // 2D arrays store buckets , each bucket has specific range of values.
+    // 2D arrays store buckets, each bucket has a specific range of values.
     T** buckets = new T*[this->size];
     // array follow indexes for each bucket.
     int* bucket_sizes = new int[this->size];
-    // intialize the buckets and their indexes.
+    // initialize the buckets and their indexes.
     for (int i = 0; i < this->size; ++i) {
         buckets[i] = new T[this->size];
         bucket_sizes[i] = 0;
     }
 
+    if (minimum == maximum) {
+        cout << endl << "Sorted Data: ";
+        displayData();
+        return;
+    }
+
     for (int i = 0; i < this->size; ++i) {
-        // Calculate the Normalization that use to determine the index and the bucket which has the value.
+        // Calculate the Normalization that uses to determine the index and the bucket which has the value.
         T norm = (this->data[i] - minimum) / (maximum - minimum);
         // Calculate the index by Normalization.
         int index = static_cast<int>(norm * (this->size - 1));
@@ -507,14 +517,17 @@ void SortingSystem<T>::bucketSort() {
         buckets[index][bucket_sizes[index]] = this->data[i];
         bucket_sizes[index]++;
     }
-    // Sort  each bucket's value by insertion sort.
+
+    // Sort each bucket's value by insertion sort.
     int index = 1;
     for (int i = 0; i < this->size; ++i) {
         if (bucket_sizes[i] > 0) {
-            insertion_sort(buckets[i], bucket_sizes[i]);
-             cout << "Iteration " << index++ << ':' ; display(buckets[i], bucket_sizes[i]);
+             insertionSortForBucket(buckets[i], bucket_sizes[i]);
+             cout << "Iteration " << index++ << ": ";
+             display(buckets[i], bucket_sizes[i]);
         }
     }
+
     // Return again the values in original Array
     index = 0 ;
     for (int i = 0; i < this->size; ++i) {
@@ -522,9 +535,9 @@ void SortingSystem<T>::bucketSort() {
             data[index++] = buckets[i][j];
         }
     }
-    // Display the Array.
-    cout << "Sorted Data :" ; displayData();
-    // Free memory of the Additional Arrays.
+
+    cout << endl << "Sorted Data: " ; displayData();
+
     for (int i = 0; i < this->size; ++i) {
         delete[] buckets[i];
     }
@@ -533,6 +546,7 @@ void SortingSystem<T>::bucketSort() {
 }
 
 // --------------------- DISPLAY DATA
+
 template<typename T>
 void SortingSystem<T>::display(T arr [] , int s) {
     cout << "[";
@@ -542,6 +556,7 @@ void SortingSystem<T>::display(T arr [] , int s) {
     }
     cout << "]" << endl;
 }
+
 template<typename T>
 void SortingSystem<T>::displayData() {
     cout << "[";
@@ -580,7 +595,7 @@ void SortingSystem<T>::showMenu() {
         cout << "6. Quick Sort." << endl;
         cout << "7. Count Sort (only for integers)." << endl;
         cout << "8. Radix Sort (only for integers)." << endl;
-        cout << "9. Bucket Sort." << endl;
+        cout << "9. Bucket Sort (only for integers and floating point numbers)." << endl;
         cout << "0. Exit From Menu." << endl;
         cout << "Enter your choice (0 - 9):";
         string choice;
@@ -616,8 +631,12 @@ void SortingSystem<T>::showMenu() {
             }
             else cout << "Radix Sort is only available for integers." << endl << endl;
         }
-        else if (choice == "9")
-            measureSortTime(&SortingSystem::bucketSort);
+        else if (choice == "9"){
+            if constexpr (std::is_integral<T>::value || std::is_floating_point<T>::value) {
+                measureSortTime(&SortingSystem::bucketSort);
+            }
+            else cout << "Bucket Sort is only available for integers and floating point numbers." << endl << endl;
+        }
         else if (choice == "0")
             return;
     }
@@ -649,7 +668,7 @@ int main() {
             cout << "Enter the number of elements:";
             getline(cin, numberOfElements);
 
-            if (isInteger(numberOfElements) && stoi(numberOfElements) > 0) break;
+            if (isValidInteger(numberOfElements) && stoi(numberOfElements) > 0) break;
             cout << "Invalid input. Please enter a valid number." << endl;
         }
 

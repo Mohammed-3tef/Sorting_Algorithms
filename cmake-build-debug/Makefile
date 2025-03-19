@@ -128,6 +128,30 @@ Sorting_Algorithms/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Sorting_Algorithms.dir\build.make CMakeFiles/Sorting_Algorithms.dir/build
 .PHONY : Sorting_Algorithms/fast
 
+Ex.obj: Ex.cpp.obj
+.PHONY : Ex.obj
+
+# target to build an object file
+Ex.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Sorting_Algorithms.dir\build.make CMakeFiles/Sorting_Algorithms.dir/Ex.cpp.obj
+.PHONY : Ex.cpp.obj
+
+Ex.i: Ex.cpp.i
+.PHONY : Ex.i
+
+# target to preprocess a source file
+Ex.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Sorting_Algorithms.dir\build.make CMakeFiles/Sorting_Algorithms.dir/Ex.cpp.i
+.PHONY : Ex.cpp.i
+
+Ex.s: Ex.cpp.s
+.PHONY : Ex.s
+
+# target to generate assembly for a file
+Ex.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Sorting_Algorithms.dir\build.make CMakeFiles/Sorting_Algorithms.dir/Ex.cpp.s
+.PHONY : Ex.cpp.s
+
 Sorting_Algorithms.obj: Sorting_Algorithms.cpp.obj
 .PHONY : Sorting_Algorithms.obj
 
@@ -161,6 +185,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Sorting_Algorithms
+	@echo ... Ex.obj
+	@echo ... Ex.i
+	@echo ... Ex.s
 	@echo ... Sorting_Algorithms.obj
 	@echo ... Sorting_Algorithms.i
 	@echo ... Sorting_Algorithms.s
