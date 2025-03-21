@@ -9,6 +9,6 @@ y
 esraa mohammed john mariam george
 1
 0
-n
 4 4 2 1 0
 a d c r w
+n
