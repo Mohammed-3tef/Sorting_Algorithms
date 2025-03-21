@@ -245,7 +245,7 @@ void SortingSystem<T>::bubbleSort() {
         for (int j = this->size - 1; j > i; --j) {
             if (data[j - 1] > data[j]) {
                 swap(data[j - 1], data[j]);
-                
+
                 // Display each Iteration in sorting
                 cout << "Iteration " << num_iteration << " : ";
                 displayData();
@@ -629,7 +629,7 @@ void SortingSystem<T>::measureSortTime(void(SortingSystem<T>::*sortFunc)()) {
 template<typename T>
 void SortingSystem<T>::showMenu() {
     while (true) {
-        cout << "Select a sorting algorithm: " << endl;
+        cout << "Select a sorting algorithm:" << endl;
         cout << "1. Insertion Sort." << endl;
         cout << "2. Selection Sort." << endl;
         cout << "3. Bubble Sort." << endl;
@@ -711,9 +711,9 @@ void runFromTerminal() {
         string dataType;
         while (true) {
             cout << "\nPlease, enter the data type :" << endl;
-            cout << "1) Integers " << endl;
-            cout << "2) Doubles & Floats" << endl;
-            cout << "3) Strings & Characters" << endl;
+            cout << "1) Integers." << endl;
+            cout << "2) Doubles & Floats." << endl;
+            cout << "3) Strings & Characters." << endl;
             cout << "Please, enter your choice: ";
             getline(cin, dataType);
 
@@ -809,15 +809,15 @@ void runFromFile() {
 
     while (true) {
         cout << "\nPlease, enter the data type " << endl;
-        cout << "1) Integers" << endl;
-        cout << "2) Doubles & Floats" << endl;
-        cout << "3) Strings & Characters" << endl;
+        cout << "1) Integers." << endl;
+        cout << "2) Doubles & Floats." << endl;
+        cout << "3) Strings & Characters." << endl;
 
         string dataType = contentOfFile[indexInFile++];
         cout << "Your choice : " << dataType << endl << endl;
 
         string numberOfElements = contentOfFile[indexInFile++];
-        cout << "Please, number of elements:" << numberOfElements << endl << endl;
+        cout << "Please, number of elements: " << numberOfElements << endl << endl;
 
         // Create the sorting system object based on the data type.
         if (dataType == "1") {
@@ -835,7 +835,12 @@ void runFromFile() {
 
         // check if user wants to exit.
         string choice = contentOfFile[indexInFile++];
-        cout << "Do you want to continue? (y/n) : " << choice << endl;
+        while (true) {
+            cout << "Do you want to continue? (y/n) : " << choice << endl;
+            if (choice == "Y" || choice == "y" || choice == "N" || choice == "n") break;
+            else cout << "Invalid choice. Please try again." << endl << endl;
+            choice = contentOfFile[indexInFile++];
+        }
 
         if (choice == "N" || choice == "n") {
             cout << "\n----- Thank you for using our system! Goodbye! -----" << endl;
@@ -852,10 +857,10 @@ int main() {
 
     while (true) {
         cout << "What do you want to do?" << endl;
-        cout << "1) Run From Terminal" << endl;
-        cout << "2) Run From File" << endl;
-        cout << "3) Exit " << endl;
-        cout << "please, enter your choice : ";
+        cout << "1) Run From Terminal." << endl;
+        cout << "2) Run From File." << endl;
+        cout << "3) Exit." << endl;
+        cout << "Please, enter your choice : ";
         getline(cin, choice);
 
         // Check the validity of input.
