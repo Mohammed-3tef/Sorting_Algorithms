@@ -60,9 +60,9 @@ public:
 
     void shellSort();
 
-    void mergeSort();
+    void mergeSortHelper();
 
-    void quickSort();
+    void quickSortHelper();
 
     void countSort();
 
@@ -72,11 +72,11 @@ public:
 
     void merge(int left, int mid, int right);
 
-    void mergeSortHelper(int left, int right);
+    void mergeSort(int left, int right);
 
     int partition(int low, int high);
 
-    void recQuickSort(int first, int last);
+    void QuickSort(int first, int last);
 
     void countSortForRadix(int exp);
 
@@ -355,22 +355,22 @@ void SortingSystem<T>::merge(const int left, const int mid, const int right) {
 }
 
 template<typename T>
-void SortingSystem<T>::mergeSortHelper(const int left, const int right) {
+void SortingSystem<T>::mergeSort(const int left, const int right) {
     if (left < right) {
         const int mid = left + (right - left) / 2;
-        mergeSortHelper(left, mid);      // Sort left half
-        mergeSortHelper(mid + 1, right); // Sort right half
+        mergeSort(left, mid);      // Sort left half
+        mergeSort(mid + 1, right); // Sort right half
         merge(left, mid, right);         // Merge the two halves
     }
 }
 
 template<typename T>
-void SortingSystem<T>::mergeSort() {
+void SortingSystem<T>::mergeSortHelper() {
     cout << "Sorting using Merge Sort...\n\n";
     cout << "Initial Data: ";
     displayData();
 
-    mergeSortHelper(0, size - 1);
+    mergeSort(0, size - 1);
 
     // Display each Iteration in sorting
     cout << endl << "Sorted Data: ";
@@ -411,21 +411,21 @@ int SortingSystem<T>::partition(int low, const int high) {
 }
 
 template<typename T>
-void SortingSystem<T>::recQuickSort(const int first, const int last) {
+void SortingSystem<T>::QuickSort(const int first, const int last) {
     if (first < last) {
         int pivotLocation = partition(first, last);
-        recQuickSort(first, pivotLocation - 1);
-        recQuickSort(pivotLocation + 1, last);
+        QuickSort(first, pivotLocation - 1);
+        QuickSort(pivotLocation + 1, last);
     }
 }
 
 template<typename T>
-void SortingSystem<T>::quickSort() {
+void SortingSystem<T>::quickSortHelper() {
     cout << "Sorting using Quick Sort...\n\n";
     cout << "Initial Data: ";
     displayData();
 
-    recQuickSort(0, this->size - 1);
+    QuickSort(0, this->size - 1);
 
     // Display each Iteration in sorting
     cout << endl << "Sorted Data: ";
@@ -695,9 +695,9 @@ void SortingSystem<T>::showMenu() {
         else if (choice == "4")
             measureSortTime(&SortingSystem::shellSort);
         else if (choice == "5")
-            measureSortTime(&SortingSystem::mergeSort);
+            measureSortTime(&SortingSystem::mergeSortHelper);
         else if (choice == "6")
-            measureSortTime(&SortingSystem::quickSort);
+            measureSortTime(&SortingSystem::quickSortHelper);
         else if (choice == "7") {
             if constexpr (is_integral<T>::value) {
                 measureSortTime(&SortingSystem::countSort);
