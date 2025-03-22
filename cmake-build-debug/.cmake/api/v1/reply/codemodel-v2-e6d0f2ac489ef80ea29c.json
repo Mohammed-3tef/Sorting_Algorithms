@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Sorting_Algorithms::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Sorting_Algorithms-Debug-2867e89d086adb604056.json",
+					"jsonFile" : "target-Sorting_Algorithms-Debug-109dd300a8bfca80e982.json",
 					"name" : "Sorting_Algorithms",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/fr/OneDrive/Desktop/Data Structures Assignments/Assignment 1/Sorting_Algorithms/cmake-build-debug",
-		"source" : "C:/Users/fr/OneDrive/Desktop/Data Structures Assignments/Assignment 1/Sorting_Algorithms"
+		"build" : "F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms/cmake-build-debug",
+		"source" : "F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 7
+		"minor" : 6
 	}
 }

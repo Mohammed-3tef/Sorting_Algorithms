@@ -4,6 +4,4 @@ project(Sorting_Algorithms)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Sorting_Algorithms
-        "Sorting Algorithms.cpp"
-        Ex.cpp
-)
+        "Sorting Algorithms.cpp")
