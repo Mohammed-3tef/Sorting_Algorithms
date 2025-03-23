@@ -694,9 +694,10 @@ void SortingSystem<T>::showMenu() {
             measureSortTime(&SortingSystem::bubbleSort);
         else if (choice == "4")
             measureSortTime(&SortingSystem::shellSort);
-        else if (choice == "5")
+        else if (choice == "5") {
             measureSortTime(&SortingSystem::mergeSortHelper);
-        else if (choice == "6")
+            iteration = 0;
+        } else if (choice == "6")
             measureSortTime(&SortingSystem::quickSortHelper);
         else if (choice == "7") {
             if constexpr (is_integral<T>::value) {
@@ -770,11 +771,7 @@ void runFromTerminal() {
             if (choice == "Y" || choice == "y" || choice == "N" || choice == "n") break;
             else cout << "Invalid choice. Please try again." << endl << endl;
         }
-
-        if (choice == "N" || choice == "n") {
-            cout << "\n----- Thank you for using our system! Goodbye! -----" << endl;
-            return;
-        }
+        if (choice == "N" || choice == "n") break;
     }
 }
 
@@ -782,20 +779,20 @@ void runFromFile() {
     string fileContent, fileName, element;
     stringstream content;
 
-    cout << "Please, enter file name:";
+    cout << "\nPlease, enter file name:";
     while (true) {
         // Get the file name and check the validity of format.
         getline(cin, fileName);
         if (fileName.size() < 5) {
             cout << "\nThe file name should be like this ----> (file name).txt\n";
-            cout << "Please, enter a valid file name :";
+            cout << "Please, enter a valid file name:";
             continue;
         }
 
         // Check file extension.
         if (fileName.substr(fileName.size() - 4, 4) != ".txt") {
             cout << "\nThe file name should be like this ----> (file name).txt\n";
-            cout << "Please, enter a valid file name :";
+            cout << "Please, enter a valid file name:";
             continue;
         }
 
@@ -803,7 +800,7 @@ void runFromFile() {
         ifstream file(fileName);
         if (!file.good()) {
             cout << "\nThe file name should be like this ----> (file name).txt\n";
-            cout << "Please, enter a valid file name :";
+            cout << "Please, enter a valid file name:";
             continue;
         }
         content << file.rdbuf();
@@ -815,9 +812,8 @@ void runFromFile() {
     int count = 0;
     for (char character: fileContent) {
         if (character == '\n' || character == ' ') {
-            contentOfFile[count] = element;
+            contentOfFile[count++] = element;
             element = "";
-            count++;
         } else element += character;
     }
     contentOfFile[count] = element;
@@ -849,44 +845,63 @@ void runFromFile() {
         // check if user wants to exit.
         string choice = contentOfFile[indexInFile++];
         while (true) {
-            cout << "Do you want to continue? (y/n) :" << choice << endl;
+            cout << "Do you want to continue? (y/n):" << choice << endl;
             if (choice == "Y" || choice == "y" || choice == "N" || choice == "n") break;
             else cout << "Invalid choice. Please try again." << endl << endl;
             choice = contentOfFile[indexInFile++];
         }
-
-        if (choice == "N" || choice == "n") {
-            cout << "\n----- Thank you for using our system! Goodbye! -----" << endl;
-            return;
-        }
+        if (choice == "N" || choice == "n") break;
     }
 }
 
 // ----------------------------------------------- MAIN FUNCTION
 
 int main() {
-    cout << "\n------------- WELCOME TO OUR SORTING SYSTEM -------------\n" << endl;
+    cout << "\n------------- WELCOME TO OUR SORTING SYSTEM -------------\n";
     string choice;
 
     while (true) {
-        cout << "What do you want to do?" << endl;
-        cout << "1) Run From Terminal." << endl;
-        cout << "2) Run From File." << endl;
-        cout << "3) Exit." << endl;
-        cout << "Please, enter your choice :";
-        getline(cin, choice);
+        // Reset global variables.
+        runFile = false;
+        indexInFile = 0;
+        fill(begin(contentOfFile), end(contentOfFile), 0);
+        while (true) {
+            cout << "\nWhat do you want to do?" << endl;
+            cout << "1) Sorting System." << endl;
+            cout << "2) Exit." << endl;
+            cout << "Please, enter your choice:";
+            getline(cin, choice);
 
-        // Check the validity of input.
-        if (choice == "1" || choice == "2" || choice == "3") break;
-        cout << "Invalid choice. Please, Try again." << endl << endl;
+            // Check the validity of input.
+            if (choice == "1" || choice == "2") break;
+            cout << "Invalid choice. Please, Try again." << endl << endl;
+        }
+
+        // Exit the system.
+        if (choice == "2") break;
+
+        while (true) {
+            cout << "\nWhat do you want to do?" << endl;
+            cout << "1) Run From Terminal." << endl;
+            cout << "2) Run From File." << endl;
+            cout << "3) Exit." << endl;
+            cout << "Please, enter your choice:";
+            getline(cin, choice);
+
+            // Check the validity of input.
+            if (choice == "1" || choice == "2" || choice == "3") break;
+            cout << "Invalid choice. Please, Try again." << endl << endl;
+        }
+
+        // Run from the terminal.
+        if (choice == "1") runFromTerminal();
+
+            // Run from the file.
+        else if (choice == "2") {
+            runFile = true;
+            runFromFile();
+        } else continue;
     }
 
-    // Run from the terminal.
-    if (choice == "1") runFromTerminal();
-
-        // Run from the file.
-    else if (choice == "2") {
-        runFile = true;
-        runFromFile();
-    } else cout << "\n----- Thank you for using our system! Goodbye! -----" << endl;
+    cout << "\n----- Thank you for using our system! Goodbye! -----" << endl;
 }
