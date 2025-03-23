@@ -45,45 +45,31 @@ template<typename T>
 class SortingSystem {
     T *data;
     int size;
-public:
-    SortingSystem(int n);
-
-    ~SortingSystem();
 
     void inputData();
-
-    void insertionSort();
-
-    void selectionSort();
-
-    void bubbleSort();
-
-    void shellSort();
-
+    void display(T arr[], int arrSize);
+    void countSortForRadix(int exp);
     void mergeSortHelper();
-
     void quickSortHelper();
 
+public:
+    SortingSystem(int n);
+    ~SortingSystem();
+
+    void insertionSort();
+    void selectionSort();
+    void bubbleSort();
+    void shellSort();
+    void mergeSort(int left, int right);
+    void quickSort(int first, int last);
     void countSort();
-
     void radixSort();
-
     void bucketSort();
 
     void merge(int left, int mid, int right);
-
-    void mergeSort(int left, int right);
-
     int partition(int low, int high);
 
-    void QuickSort(int first, int last);
-
-    void countSortForRadix(int exp);
-
     void displayData();
-
-    void display(T arr[], int arrSize);
-
     void measureSortTime(void (SortingSystem<T>::*sortFunc)());
 
     void showMenu();
@@ -411,11 +397,11 @@ int SortingSystem<T>::partition(int low, const int high) {
 }
 
 template<typename T>
-void SortingSystem<T>::QuickSort(const int first, const int last) {
+void SortingSystem<T>::quickSort(const int first, const int last) {
     if (first < last) {
         int pivotLocation = partition(first, last);
-        QuickSort(first, pivotLocation - 1);
-        QuickSort(pivotLocation + 1, last);
+        quickSort(first, pivotLocation - 1);
+        quickSort(pivotLocation + 1, last);
     }
 }
 
@@ -425,7 +411,7 @@ void SortingSystem<T>::quickSortHelper() {
     cout << "Initial Data: ";
     displayData();
 
-    QuickSort(0, this->size - 1);
+    quickSort(0, this->size - 1);
 
     // Display each Iteration in sorting
     cout << endl << "Sorted Data: ";
