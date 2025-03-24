@@ -10,15 +10,14 @@
                 It provides an interactive menu for selecting a sorting method, supports various data types using templates,
                 and displays each sorting step for better understanding.
 
- * Date: 19 / 3 / 2025
+ * Date: 23 / 3 / 2025
  * Prof: Dr. Besheer
 
- * Version: V1.0
+ * Version: V7.0
 */
 // < ========================================================================================== >
 
 #include <bits/stdc++.h>
-
 using namespace std;
 
 // ----------------------------------------------- GLOBAL VARIABLES
@@ -84,7 +83,7 @@ public:
 
 template<typename T>
 SortingSystem<T>::SortingSystem(const int n) : size(n) {
-    data = new T[size];
+    this->data = new T[size];
     inputData();
 }
 
@@ -94,14 +93,14 @@ void SortingSystem<T>::inputData() {
         for (int i = 1; i <= this->size; ++i) {
             // Handle if the type of data is strings.
             if constexpr (is_same<T, string>::value) {
-                data[i - 1] = contentOfFile[indexInFile++];
-                cout << "Element " << i << " : " << data[i - 1] << endl;
+                this->data[i - 1] = contentOfFile[indexInFile++];
+                cout << "Element " << i << " : " << this->data[i - 1] << endl;
             }
 
                 // Handle if the type of data is char.
             else if constexpr (is_same<T, char>::value) {
-                data[i - 1] = contentOfFile[indexInFile++][0];
-                cout << "Element " << i << " : " << data[i - 1] << endl;
+                this->data[i - 1] = contentOfFile[indexInFile++][0];
+                cout << "Element " << i << " : " << this->data[i - 1] << endl;
             }
 
                 // Handle if the type of data is float and double.
@@ -110,8 +109,8 @@ void SortingSystem<T>::inputData() {
                 while (true) {
                     element = contentOfFile[indexInFile++];
                     if (isValidFloat(element)) {
-                        data[i - 1] = stod(element);
-                        cout << "Element " << i << " : " << data[i - 1] << endl;
+                        this->data[i - 1] = stod(element);
+                        cout << "Element " << i << " : " << this->data[i - 1] << endl;
                         break;
                     }
                     cout << "Invalid Input!\n\n";
@@ -124,9 +123,9 @@ void SortingSystem<T>::inputData() {
                 while (true) {
                     element = contentOfFile[indexInFile++];
                     if (isValidInteger(element)) {
-                        data[i - 1] = stoll(element);
-                        if (data[i - 1] < 0) isNegativeElement = true;
-                        cout << "Element " << i << " : " << data[i - 1] << endl;
+                        this->data[i - 1] = stoll(element);
+                        if (this->data[i - 1] < 0) isNegativeElement = true;
+                        cout << "Element " << i << " : " << this->data[i - 1] << endl;
                         break;
                     }
                     cout << "Invalid Input!\n\n";
@@ -148,19 +147,19 @@ void SortingSystem<T>::inputData() {
 
             // Handle if the type of data is strings.
             if constexpr (is_same<T, string>::value) {
-                data[i - 1] = element;
+                this->data[i - 1] = element;
             }
 
                 // Handle if the type of data is char.
             else if constexpr (is_same<T, char>::value) {
-                data[i - 1] = element[0];
+                this->data[i - 1] = element[0];
             }
 
                 // Handle if the type of data is float and double.
             else if constexpr (is_same<T, double>::value || is_same<T, float>::value) {
                 while (true) {
                     if (isValidFloat(element)) {
-                        data[i - 1] = stod(element);
+                        this->data[i - 1] = stod(element);
                         break;
                     }
                     cout << "Invalid Input!\n";
@@ -173,8 +172,8 @@ void SortingSystem<T>::inputData() {
             else {
                 while (true) {
                     if (isValidInteger(element)) {
-                        data[i - 1] = stoll(element);
-                        if (data[i - 1] < 0) isNegativeElement = true;
+                        this->data[i - 1] = stoll(element);
+                        if (this->data[i - 1] < 0) isNegativeElement = true;
                         break;
                     }
                     cout << "Invalid Input!\n";
@@ -189,7 +188,7 @@ void SortingSystem<T>::inputData() {
 
 template<typename T>
 SortingSystem<T>::~SortingSystem() {
-    delete[] data;
+    delete[] this->data;
 }
 
 // --------------------- INSERTION SORT
@@ -266,8 +265,8 @@ void SortingSystem<T>::bubbleSort() {
     long long num_iteration = 1;
     for (int i = 0; i < this->size; i++) {
         for (int j = this->size - 1; j > i; --j) {
-            if (data[j - 1] > data[j]) {
-                swap(data[j - 1], data[j]);
+            if (this->data[j - 1] > this->data[j]) {
+                swap(this->data[j - 1], this->data[j]);
 
                 // Display each Iteration in sorting
                 cout << "Iteration " << num_iteration << " : ";
@@ -293,11 +292,11 @@ void SortingSystem<T>::shellSort() {
     long long num_iteration = 1;
     for (int gap = this->size / 2; gap > 0; gap /= 2) {
         for (int i = gap; i < this->size; i += 1) {
-            T temp = data[i];
+            T temp = this->data[i];
             int j;
             for (j = i; j >= gap && data[j - gap] > temp; j -= gap)
-                data[j] = data[j - gap];
-            data[j] = temp;
+                this->data[j] = this->data[j - gap];
+            this->data[j] = temp;
         }
 
         // Display each Iteration in sorting
@@ -324,29 +323,29 @@ void SortingSystem<T>::merge(const int left, const int mid, const int right) {
     T *right_data = new T[n2];
 
     for (int i = 0; i < n1; i++)
-        left_data[i] = data[left + i];
+        left_data[i] = this->data[left + i];
     for (int i = 0; i < n2; i++)
-        right_data[i] = data[mid + 1 + i];
+        right_data[i] = this->data[mid + 1 + i];
 
     int i = 0, j = 0, k = left;
     while (i < n1 && j < n2) {
         if (left_data[i] <= right_data[j]) {
-            data[k] = left_data[i];
+            this->data[k] = left_data[i];
             i++;
         } else {
-            data[k] = right_data[j];
+            this->data[k] = right_data[j];
             j++;
         }
         k++;
     }
     while (i < n1) {
-        data[k] = left_data[i];
+        this->data[k] = left_data[i];
         i++;
         k++;
     }
 
     while (j < n2) {
-        data[k] = right_data[j];
+        this->data[k] = right_data[j];
         j++;
         k++;
     }
@@ -377,7 +376,7 @@ void SortingSystem<T>::mergeSortHelper() {
     cout << "Initial Data: ";
     displayData();
 
-    mergeSort(0, size - 1);
+    mergeSort(0, this->size - 1);
 
     // Display each Iteration in sorting
     cout << endl << "Sorted Data: ";
@@ -388,14 +387,14 @@ void SortingSystem<T>::mergeSortHelper() {
 
 template<typename T>
 int SortingSystem<T>::partition(int low, const int high) {
-    swap(data[low], data[(low + high) / 2]);
-    T pivot = data[low];
+    swap(this->data[low], this->data[(low + high) / 2]);
+    T pivot = this->data[low];
     int smallIndex = low;
 
     for (int index = low + 1; index <= high; index++) {
-        if (data[index] < pivot) {
+        if (this->data[index] < pivot) {
             smallIndex++;
-            swap(data[smallIndex], data[index]);
+            swap(this->data[smallIndex], this->data[index]);
         }
     }
 
@@ -404,12 +403,12 @@ int SortingSystem<T>::partition(int low, const int high) {
     // Print the current partition
     cout << "Pivot: " << pivot << " --> [";
     for (int i = low; i < smallIndex; i++) {
-        cout << data[i];
+        cout << this->data[i];
         if (i < smallIndex - 1) cout << ", ";
     }
     cout << "]  " << pivot << "  [";
     for (int i = smallIndex + 1; i <= high; i++) {
-        cout << data[i];
+        cout << this->data[i];
         if (i < high) cout << ", ";
     }
     cout << "]" << endl;
@@ -448,9 +447,9 @@ void SortingSystem<T>::countSort() {
     displayData();
 
     // Find the maximum value in the array
-    int Max_Value = data[0];
+    int Max_Value = this->data[0];
     for (int i = 1; i < this->size; i++) {
-        Max_Value = max(Max_Value, data[i]);
+        Max_Value = max(Max_Value, this->data[i]);
     }
 
     // Create and initialize a count array
@@ -460,7 +459,7 @@ void SortingSystem<T>::countSort() {
 
     // Step 1: Count occurrences
     for (int i = 0; i < this->size; i++) {
-        C[data[i]]++;
+        C[this->data[i]]++;
     }
 
     // Step 2: Compute cumulative count
@@ -476,13 +475,13 @@ void SortingSystem<T>::countSort() {
 
     // Step 3: Place elements in sorted order
     for (int i = this->size - 1; i >= 0; i--) {
-        B[C[data[i]] - 1] = data[i];
-        C[data[i]]--;
+        B[C[this->data[i]] - 1] = this->data[i];
+        C[this->data[i]]--;
     }
 
     // Step 4: Copy sorted array back to data
     for (int i = 0; i < this->size; i++) {
-        data[i] = B[i];
+        this->data[i] = B[i];
     }
 
     cout << endl << "Sorted Data: ";
@@ -502,7 +501,7 @@ void SortingSystem<T>::countSortForRadix(int exp) {
 
     // Step 1: Count occurrences of each digit at place 'exp'
     for (int i = 0; i < this->size; i++) {
-        int digit = (data[i] / exp) % 10;
+        int digit = (this->data[i] / exp) % 10;
         C[digit]++;
     }
 
@@ -513,14 +512,14 @@ void SortingSystem<T>::countSortForRadix(int exp) {
 
     // Step 3: Place elements in sorted order (stable sort)
     for (int i = this->size - 1; i >= 0; i--) {
-        int digit = (data[i] / exp) % 10;
-        B[C[digit] - 1] = data[i];
+        int digit = (this->data[i] / exp) % 10;
+        B[C[digit] - 1] = this->data[i];
         C[digit]--;
     }
 
     // Step 4: Copy sorted elements back to an original array
     for (int i = 0; i < this->size; i++) {
-        data[i] = B[i];
+        this->data[i] = B[i];
     }
 
     // Free dynamically allocated memory
@@ -533,9 +532,9 @@ void SortingSystem<T>::radixSort() {
     cout << "Initial Data: ";
     displayData();
 
-    int Max_Value = 0;
+    int Max_Value = this->data[0];
     for (int i = 1; i < this->size; i++) {
-        Max_Value = max(Max_Value, data[i]);
+        Max_Value = max(Max_Value, this->data[i]);
     }
 
     // Apply counting sort for each digit place
@@ -636,8 +635,8 @@ template<typename T>
 void SortingSystem<T>::displayData() {
     cout << "[";
     for (int i = 0; i < this->size; ++i) {
-        if (i != this->size - 1) cout << data[i] << ", ";
-        else cout << data[i];
+        if (i != this->size - 1) cout << this->data[i] << ", ";
+        else cout << this->data[i];
     }
     cout << "]" << endl;
 }
@@ -704,27 +703,36 @@ void SortingSystem<T>::showMenu() {
         else if (choice == "5") {
             measureSortTime(&SortingSystem::mergeSortHelper);
             iteration = 0;
-        } else if (choice == "6")
+        }
+        else if (choice == "6")
             measureSortTime(&SortingSystem::quickSortHelper);
         else if (choice == "7") {
             if (!isNegativeElement) {
                 if constexpr (is_integral<T>::value && !is_same<T, char>::value && !is_same<T, wchar_t>::value &&
                               !is_same<T, char16_t>::value && !is_same<T, char32_t>::value) {
                     measureSortTime(&SortingSystem::countSort);
-                } else cout << "Count Sort is only available for integers." << endl << endl;
-            } else cout << "Count Sort is only available for integers." << endl << endl;
-        } else if (choice == "8") {
+                }
+                else cout << "Count Sort is only available for integers." << endl << endl;
+            }
+            else cout << "Count Sort is only available for integers." << endl << endl;
+        }
+        else if (choice == "8") {
             if (!isNegativeElement) {
                 if constexpr (is_integral<T>::value && !is_same<T, char>::value && !is_same<T, wchar_t>::value &&
                               !is_same<T, char16_t>::value && !is_same<T, char32_t>::value) {
                     measureSortTime(&SortingSystem::radixSort);
-                } else cout << "Radix Sort is only available for integers." << endl << endl;
-            } else cout << "Radix Sort is only available for integers." << endl << endl;
-        } else if (choice == "9") {
+                }
+                else cout << "Radix Sort is only available for integers." << endl << endl;
+            }
+            else cout << "Radix Sort is only available for integers." << endl << endl;
+        }
+        else if (choice == "9") {
             if constexpr (is_integral<T>::value || is_floating_point<T>::value) {
                 measureSortTime(&SortingSystem::bucketSort);
-            } else cout << "Bucket Sort is only available for integers and floating point numbers." << endl << endl;
-        } else if (choice == "0") {
+            }
+            else cout << "Bucket Sort is only available for integers and floating point numbers." << endl << endl;
+        }
+        else if (choice == "0") {
             delete[] tempData;
             return;
         }
@@ -833,9 +841,11 @@ void runFromFile() {
         if ((character == '\n' || character == ' ') && !element.empty()) {
             count++;
             element = "";
-        } else if (character == '\n' || character == ' ') {
+        }
+        else if (character == '\n' || character == ' ') {
             continue;
-        } else element += character;
+        }
+        else element += character;
     }
 
     // Reset global variables.
@@ -850,9 +860,11 @@ void runFromFile() {
         if ((character == '\n' || character == ' ') && !element.empty()) {
             contentOfFile[count++] = element;
             element = "";
-        } else if (character == '\n' || character == ' ') {
+        }
+        else if (character == '\n' || character == ' ') {
             continue;
-        } else element += character;
+        }
+        else element += character;
     }
     contentOfFile[count] = element;
 

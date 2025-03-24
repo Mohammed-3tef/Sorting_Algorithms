@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms/cmake-build-debug",
-		"source" : "F:/FCAI/Second year assignment/Second term/data structure/assignment 1/Sorting_Algorithms/Sorting_Algorithms"
+		"build" : "D:/Assignments/Data Structures/Assignment 1/Sorting_Algorithms/cmake-build-debug",
+		"source" : "D:/Assignments/Data Structures/Assignment 1/Sorting_Algorithms"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 7
 	}
 }
