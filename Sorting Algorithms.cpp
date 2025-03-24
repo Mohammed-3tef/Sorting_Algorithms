@@ -831,6 +831,23 @@ void runFromFile() {
     int count = 0;
     for (char character: fileContent) {
         if ((character == '\n' || character == ' ') && !element.empty()) {
+            count++;
+            element = "";
+        } else if (character == '\n' || character == ' ') {
+            continue;
+        } else element += character;
+    }
+
+    // Reset global variables.
+    delete [] contentOfFile;
+    contentOfFile = new string[count + 1];
+    indexInFile = 0;
+
+    count = 0;
+    element = "";
+
+    for (char character: fileContent) {
+        if ((character == '\n' || character == ' ') && !element.empty()) {
             contentOfFile[count++] = element;
             element = "";
         } else if (character == '\n' || character == ' ') {
@@ -899,14 +916,11 @@ void runFromFile() {
 int main() {
     cout << "\n------------- WELCOME TO OUR SORTING SYSTEM -------------\n";
     string choice;
-    contentOfFile = new string[100];
+    contentOfFile = new string[1];
 
     while (true) {
         // Reset global variables.
         runFile = false;
-        indexInFile = 0;
-        delete[] contentOfFile;
-        contentOfFile = new string[100];
 
         while (true) {
             cout << "\nWhat do you want to do?" << endl;
@@ -946,5 +960,6 @@ int main() {
         } else continue;
     }
 
+    delete [] contentOfFile;
     cout << "\n----- Thank you for using our system! Goodbye! -----" << endl;
 }

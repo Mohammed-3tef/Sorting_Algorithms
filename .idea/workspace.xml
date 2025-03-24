@@ -25,8 +25,6 @@
       <change beforePath="$PROJECT_DIR$/Sorting Algorithms.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Sorting Algorithms.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/test.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +56,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "CMake Application.Sorting_Algorithms.executor": "Run",
+    "CMake Application.Sorting_Algorithms.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
@@ -96,7 +94,7 @@
       <workItem from="1742705664095" duration="34000" />
       <workItem from="1742732323376" duration="1713000" />
       <workItem from="1742735225092" duration="32000" />
-      <workItem from="1742813544599" duration="5763000" />
+      <workItem from="1742813544599" duration="8056000" />
     </task>
     <servers />
   </component>
