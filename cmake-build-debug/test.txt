@@ -6,7 +6,7 @@ Nablus Gaza Al-Khalil Ramallah Ariha Jenin Tolkarem Al-Quds Yafa
 y
 1
 5
-100 4 40 2 6
+100 ahmed 4 40 2 6
 7 8 9
 0
 y
@@ -24,4 +24,19 @@ h y
 9
 0
 a h u
+y
+1
+5
+-1 5 100 3 1
+7 8 9
+0
+y
+4
+5
+fffffffff g t q +
+7 8 9 6
+0
+
+f
+
 n
